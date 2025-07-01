@@ -14,16 +14,17 @@ def url_to_markdown(url, use_readerlm=False):
 if __name__ == "__main__":
     import os
 
-    urls = [
-        "https://www.kaggle.com/competitions/ariel-data-challenge-2025/overview",
-        "https://www.kaggle.com/competitions/ariel-data-challenge-2025/data",
-        "https://www.kaggle.com/competitions/ariel-data-challenge-2025/rules",
+    discussion_urls = [
+        "https://www.kaggle.com/competitions/ariel-data-challenge-2025/discussion/586478",
+        "https://www.kaggle.com/competitions/ariel-data-challenge-2025/discussion/586229",
     ]
     os.makedirs("./docs", exist_ok=True)
-    for url in urls:
+    discussion_md = ""
+    for url in discussion_urls:
         md = url_to_markdown(url)
-        filename = url.split("/")[-1] or "index"
-        filepath = os.path.join("docs", f"{filename}.md")
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(md)
-        print(f"Saved markdown for {url} to {filepath}")
+        discussion_md += f"\n\n# Source: {url}\n\n"
+        discussion_md += md.strip() + "\n"
+    discussion_path = os.path.join("docs", "discussion.md")
+    with open(discussion_path, "w", encoding="utf-8") as f:
+        f.write(discussion_md.strip())
+    print(f"Saved combined discussion markdown to {discussion_path}")
